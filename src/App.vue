@@ -1,30 +1,45 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
+<!--
+ * @Description: vue3 SQL编辑器
+ * @Author: yuyi
+ * @Date: 2024-08-05 23:02:29
+ * @LastEditors: yuyi
+ * @LastEditTime: 2024-08-06 00:13:51
+-->
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+	<div class="layout">
+		<el-card style="width: 50%;">
+			<codemirror v-model="sqlCommand" :extensions="extensions" :autofocus="true" placeholder="请输入SQL" />
+		</el-card>
+	</div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<script>
+import { SQL } from '@/constants/sql.js'
+import { sql } from '@codemirror/lang-sql'
+import { Codemirror } from 'vue-codemirror'
+import { oneDark } from '@codemirror/theme-one-dark'
+export default {
+	name: 'SQLEditor',
+	components: {
+		Codemirror
+	},
+	data() {
+		return {
+			sqlCommand: SQL,
+			extensions: [sql(), oneDark]
+		};
+	},
+	methods: {
+	}
+};
+</script>
+<style lang="scss">
+.cm-editor {
+	width: 100%;
+	height: 460px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.cm-focused {
+	outline: none !important;
 }
 </style>
